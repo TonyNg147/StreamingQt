@@ -15,9 +15,12 @@ qt_standard_project_setup()
 add_subdirectory(CustomVideoHandle)
 add_subdirectory(assets)
 add_subdirectory(HMI)
+add_subdirectory(CameraHandle)
 
 qt_add_executable(appCustomVideoFrame
     main.cpp
+    CameraHandle/camerautils.h
+    CameraHandle/camerautils.cpp
 
 )
 
@@ -27,4 +30,5 @@ target_link_libraries(appCustomVideoFrame
     assets
     CustomVideoHandle
     HMI
+    CameraHandle
 )

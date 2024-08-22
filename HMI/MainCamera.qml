@@ -1,6 +1,7 @@
 import QtQuick
 import CustomVideoHandle
 import assets
+import CameraHandle
 Window {
 	width: 640
 	height: 480
@@ -21,4 +22,17 @@ Window {
 	// 	width: 500
 	// 	height: 500
 	// }
+	CameraPool{
+		id: cameraPool
+		position: CameraUtil.FRONT
+		Component.onCompleted: {
+			cameraPool.startStreaming()
+		}
+	}
+	CameraFrameProcessor{
+		anchors.centerIn: parent
+		sourcePool: cameraPool
+		width: 500
+		height: 500
+	}
 }

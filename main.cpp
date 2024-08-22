@@ -1,13 +1,20 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <videoTypeRegistration.h>
+#include <cameraTypeRegistration.h>
+#include <camerautils.h>
 int main(int argc, char *argv[])
 {
 	QGuiApplication app(argc, argv);
 
 	QQmlApplicationEngine engine;
 	CustomVideo::registerType();
-	const QUrl url(QStringLiteral("qrc:/HMI/Main.qml"));
+	CustomCamera::registerType();
+
+	qDebug() << "Camera avaiable " << CameraUtil::cameraAvailable();
+
+	// const QUrl url(QStringLiteral("qrc:/HMI/Main.qml"));
+	const QUrl url(QStringLiteral("qrc:/HMI/MainCamera.qml"));
 	QObject::connect(
 		&engine,
 		&QQmlApplicationEngine::objectCreationFailed,
