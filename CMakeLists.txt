@@ -1,0 +1,30 @@
+cmake_minimum_required(VERSION 3.16)
+
+project(CustomVideoFrame VERSION 0.1 LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC ON)
+
+find_package(Qt6 6.4 REQUIRED COMPONENTS Quick Multimedia Quick)
+
+qt_standard_project_setup()
+
+add_subdirectory(CustomVideoHandle)
+add_subdirectory(assets)
+add_subdirectory(HMI)
+
+qt_add_executable(appCustomVideoFrame
+    main.cpp
+
+)
+
+target_link_libraries(appCustomVideoFrame
+    PRIVATE
+    Qt6::Quick
+    assets
+    CustomVideoHandle
+    HMI
+)
