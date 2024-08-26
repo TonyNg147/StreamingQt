@@ -12,10 +12,13 @@ find_package(Qt6 6.4 REQUIRED COMPONENTS Quick Multimedia Quick)
 
 qt_standard_project_setup()
 
+add_subdirectory(Utils)
+add_subdirectory(Core)
 add_subdirectory(CustomVideoHandle)
 add_subdirectory(assets)
 add_subdirectory(HMI)
 add_subdirectory(CameraHandle)
+add_subdirectory(CameraStorage)
 
 qt_add_executable(appCustomVideoFrame
     main.cpp
@@ -31,4 +34,5 @@ target_link_libraries(appCustomVideoFrame
     CustomVideoHandle
     HMI
     CameraHandle
+    CameraStorage
 )

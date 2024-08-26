@@ -8,18 +8,6 @@
 
 class VideoSourcePoolImpl;
 
-
-template<typename T>
-struct DeleteLater{
-	void operator()(T* target) {
-		if (target) {
-			target->deleteLater();
-		}
-	}
-};
-
-typedef DeleteLater<QObject> DeleteLaterQObject;
-
 class VideoSourcePool: public QObject
 {
 	Q_OBJECT

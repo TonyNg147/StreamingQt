@@ -1,0 +1,3 @@
+module HMI.Const
+singleton ComponentEnum 1.0 ComponentEnum.qml
+ButtonAttribute 1.0 ButtonAttribute.qml

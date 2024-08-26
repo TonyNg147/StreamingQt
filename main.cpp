@@ -2,6 +2,7 @@
 #include <QQmlApplicationEngine>
 #include <videoTypeRegistration.h>
 #include <cameraTypeRegistration.h>
+#include <cameraStorageTypeRegistration.h>
 #include <camerautils.h>
 int main(int argc, char *argv[])
 {
@@ -9,19 +10,23 @@ int main(int argc, char *argv[])
 
 	QQmlApplicationEngine engine;
 	CustomVideo::registerType();
-	CustomCamera::registerType();
+	CameraHandle::registerType();
+	CameraStorageNs::registerType();
 
 	qDebug() << "Camera avaiable " << CameraUtil::cameraAvailable();
 
-	// const QUrl url(QStringLiteral("qrc:/HMI/Main.qml"));
 	const QUrl url(QStringLiteral("qrc:/HMI/MainCamera.qml"));
+
+	// QThread::sleep(10);
 	QObject::connect(
 		&engine,
 		&QQmlApplicationEngine::objectCreationFailed,
 		&app,
 		[]() { QCoreApplication::exit(-1); },
 		Qt::QueuedConnection);
-	engine.load(url);
+		engine.load(url);
+
+
 
 	return app.exec();
 }

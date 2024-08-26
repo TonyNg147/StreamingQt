@@ -8,12 +8,15 @@
 
 
 #include "camerautils.h"
-
+#include <FrameSourceBase.h>
+#include <QMediaCaptureSession>
+#include <executionhelper.h>
 class CameraPoolImpl;
 
-class CameraPool: public QObject{
+class CameraPool: public FrameSourceBase, public ExecutionHelper{
 	Q_OBJECT
 	Q_PROPERTY(CameraUtil::CameraPosition position READ position WRITE setPosition NOTIFY positionChanged)
+	Q_PROPERTY(const QMediaCaptureSession* captureSession READ captureSession CONSTANT)
 
 
 public:
@@ -22,21 +25,20 @@ public:
 
 	CameraUtil::CameraPosition position() const;
 	void setPosition(CameraUtil::CameraPosition newPosition);
+	const QMediaCaptureSession *captureSession() const;
 
 public slots:
-	void startStreaming();
-
-
+	void stop() final;
+	void start() final;
 
 signals:
 	void positionChanged();
 private:
 	void onVideoFrameImageRecevied(const QImage&);
-signals:
-	void videoFrameChanged(const QImage&);
+	void onVideoFrameRecevied(const QVideoFrame&);
+
 private:
-	QThread m_workingThread;
-	std::unique_ptr<CameraPoolImpl> m_impl;
+	std::unique_ptr<CameraPoolImpl, DeleteLaterQObject> m_impl;
 	CameraUtil::CameraPosition m_position = {CameraUtil::CameraPosition::UNKNOWN};
 };
 

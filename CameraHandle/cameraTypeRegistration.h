@@ -4,7 +4,7 @@
 #include "camerapool.h"
 #include "cameraframeprocessor.h"
 #include "camerautils.h"
-namespace CustomCamera{
+namespace CameraHandle{
 static inline void registerType() {
 	qmlRegisterType<CameraPool>("CameraHandle", 1,0,"CameraPool");
 	qmlRegisterType<CameraFrameProcessor>("CameraHandle", 1,0,"CameraFrameProcessor");

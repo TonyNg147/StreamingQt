@@ -8,6 +8,8 @@
 
 #include "camerapool.h"
 
+#include "camerascreencapture.h"
+
 class CameraFrameProcessor : public QQuickPaintedItem
 {
 	Q_OBJECT
@@ -20,8 +22,12 @@ public:
 
 	void paint(QPainter *painter) final;
 
+public slots:
+	void capture();
+
 private:
 	void onVideoFrameChanged(const QImage&);
+	void rounded(QPainter* painter);
 
 signals:
 	void sourcePoolChanged();
@@ -29,6 +35,7 @@ signals:
 private:
 	CameraPool *m_sourcePool = nullptr;
 	QImage m_currentVideoFrame;
+	std::unique_ptr<CameraScreenCapture> m_screenCapture;
 };
 
 #endif // CAMERAFRAMEPROCESSOR_H
