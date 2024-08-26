@@ -1,46 +1,47 @@
 #ifndef CAMERA_STORAGE_H
 #define CAMERA_STORAGE_H
-#include <VideoStorageBase.h>
-#include <VideoRecordingBase.h>
 #include <DeleteLater.h>
 #include <QMediaRecorder>
+#include <VideoRecordingBase.h>
+#include <VideoStorageBase.h>
 class QMediaRecorder;
 // class CameraStorageServiceBase;
 #include "camerastorageservice.h"
 
-class CameraStorage: public VideoRecordingBase, public VideoStorageBase
+class CameraStorage
+    : public VideoRecordingBase
+    , public VideoStorageBase
 {
-    Q_OBJECT
-    Q_PROPERTY(QString recordingPath WRITE setRecordingPath)
-    public:
-        CameraStorage(QObject* parent = nullptr);
-        virtual void setVideoSize(const size_t&) override;
-		virtual void setNumberOfVideo(const uint8_t&) override;
-		virtual void setDurationForEach(const size_t&) override;
+	Q_OBJECT
+	Q_PROPERTY(QString recordingPath WRITE setRecordingPath)
 
-    public slots:
+public:
+	CameraStorage(QObject *parent = nullptr);
+	virtual void setVideoSize(const size_t &) override;
+	virtual void setNumberOfVideo(const uint8_t &) override;
+	virtual void setDurationForEach(const size_t &) override;
 
-        virtual void attachToScreenCapture(QMediaCaptureSession*) override;
+public slots:
 
-        virtual void detachFromCurrent() override;
+	virtual void attachToScreenCapture(QMediaCaptureSession *) override;
 
-        virtual void setRecordingPath(const QString&) override;
+	virtual void detachFromCurrent() override;
 
-        virtual bool startRecording()  override;
+	virtual void setRecordingPath(const QString &) override;
 
-        virtual bool stopRecording()  override;
+	virtual bool startRecording() override;
 
-	private:
-		virtual void stopImpl() override;
+	virtual bool stopRecording() override;
 
-    private:
-        void updateStorageCapacity() override;
+private:
+	virtual void stopImpl() override;
 
-    private:
-		std::unique_ptr<QMediaRecorder> m_recorder;
-		std::unique_ptr<CameraStorageServiceBase> m_cameraService;
+private:
+	void updateStorageCapacity() override;
 
+private:
+	std::unique_ptr<QMediaRecorder> m_recorder;
+	std::unique_ptr<CameraStorageServiceBase> m_cameraService;
 };
 
-
-#endif //CAMERA_STORAGE_H
+#endif // CAMERA_STORAGE_H

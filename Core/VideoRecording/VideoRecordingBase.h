@@ -4,26 +4,25 @@
 
 class QMediaCaptureSession;
 
-class VideoRecordingBase: public RecordingBase
+class VideoRecordingBase : public RecordingBase
 {
-    Q_OBJECT
-    public:
-        VideoRecordingBase(QObject* parent = nullptr);
-        ~VideoRecordingBase() override;
+	Q_OBJECT
 
-    public slots:
+public:
+	VideoRecordingBase(QObject *parent = nullptr);
+	~VideoRecordingBase() override;
 
-        virtual void attachToScreenCapture(QMediaCaptureSession*) = 0;
+public slots:
 
-        virtual void detachFromCurrent() = 0;
+	virtual void attachToScreenCapture(QMediaCaptureSession *) = 0;
 
-    signals:
-        void attachStatusOnCaptureSessionChanged(bool);
+	virtual void detachFromCurrent() = 0;
 
-    protected:
-        QMediaCaptureSession* m_screenCaptureSession;
+signals:
+	void attachStatusOnCaptureSessionChanged(bool);
 
+protected:
+	QMediaCaptureSession *m_screenCaptureSession;
 };
 
-
-#endif 
+#endif

@@ -88,7 +88,7 @@ MouseArea{
 		function isEnteredState(state) {
 			let res = buttonBase.buttonState === state && registerdStates.indexOf(state) !== -1
 			return res
-        } 
+        }
     }
 
     QtObject{
@@ -105,7 +105,7 @@ MouseArea{
             }
 
             inTimeLoadItemsLoader.active = true
-        } else if (scripts.toStateON === undefined 
+        } else if (scripts.toStateON === undefined
                  && scripts.toStateOFF === undefined
                  && scripts.toStateINACTIVE === undefined
                  && scripts.toStateACTIVE === undefined) {

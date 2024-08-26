@@ -10,6 +10,12 @@ set(CMAKE_AUTOUIC ON)
 
 find_package(Qt6 6.4 REQUIRED COMPONENTS Quick Multimedia Quick)
 
+set(CMAKE_PREFIX_PATH ${CMAKE_SOURCE_DIR}/cmake)
+
+find_package(PreCommit REQUIRED)
+
+PreCommitInstallation()
+
 qt_standard_project_setup()
 
 add_subdirectory(Utils)

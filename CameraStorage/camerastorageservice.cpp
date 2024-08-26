@@ -1,19 +1,16 @@
 #include "camerastorageservice.h"
 #include <QDebug>
 
-
 CameraStorageServiceBase::CameraStorageServiceBase(QObject *parent)
-	:QObject{parent}
+    : QObject{parent}
 {
-
 }
 
-
 CameraStorageService::CameraStorageService(int duration, int fileCount, const QString &fileName)
-	:CameraStorageServiceBase{nullptr}
-	,m_fileName{fileName}
-	,m_duration{duration}
-	,m_fileCount{fileCount}
+    : CameraStorageServiceBase{nullptr}
+    , m_fileName{fileName}
+    , m_duration{duration}
+    , m_fileCount{fileCount}
 {
 	m_filePaths.reserve(fileCount);
 	qWarning() << "Get file count " << m_fileCount << " " << m_filePaths.size();
@@ -26,7 +23,8 @@ CameraStorageService::CameraStorageService(int duration, int fileCount, const QS
 	qWarning() << "Call at this place " << m_duration;
 	m_trackingTimer.setInterval(m_duration);
 	m_trackingTimer.setSingleShot(true);
-	QObject::connect(&m_trackingTimer, &QTimer::timeout, this, &CameraStorageService::onDueTimeArrived);
+	QObject::connect(
+	    &m_trackingTimer, &QTimer::timeout, this, &CameraStorageService::onDueTimeArrived);
 }
 
 void CameraStorageService::setObservant(RecordingBase *observant)
@@ -86,6 +84,4 @@ bool CameraStorageService::isValidService()
 void CameraStorageService::saveInNewFileIndex(const int &index)
 {
 	m_observant->setRecordingPath(m_filePaths[index]);
-
 }
-

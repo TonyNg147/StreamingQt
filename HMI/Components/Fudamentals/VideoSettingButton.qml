@@ -11,7 +11,7 @@ ButtonWithLayer{
 		function toStateOFF() {
             manageInternalButtonState.state = "OFF"
         }
-        
+
 		function toStateON() {
 
             manageInternalButtonState.state = "ON"
