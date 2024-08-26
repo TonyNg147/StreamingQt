@@ -41,3 +41,14 @@ repos:
               ^Utils/.* |
               main.cpp
           )$
+
+      - id: qmlFormat
+        name: Format qml files
+        entry: qmlformat -i -t
+        language: system
+        types: [qml]
+        files: |
+          (?x)(
+            ^HMI/Components/.* |
+            ^HMI/Const/.* |
+          )$
