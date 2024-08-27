@@ -18,8 +18,8 @@ PreCommitInstallation()
 
 qt_standard_project_setup()
 
-add_subdirectory(Utils)
 add_subdirectory(Core)
+add_subdirectory(Utils)
 add_subdirectory(CustomVideoHandle)
 add_subdirectory(assets)
 add_subdirectory(HMI)

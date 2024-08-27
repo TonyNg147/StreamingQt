@@ -1,14 +1,17 @@
 #include "executionhelper.h"
-#include <QThreadPool>
-#include <QRunnable>
+#include <HeapAllocationOnly.h>
 #include <QDebug>
+#include <QRunnable>
+#include <QThreadPool>
 
-class ExecuteOrRetry: public QRunnable
+class ExecuteOrRetry
+    : public QRunnable
+    , public HeapAllocationOnly
 {
 public:
-	ExecuteOrRetry(std::function<void()>&& task, std::function<bool()>&& condition, int count)
-		:m_task{std::move(task)}
-		,m_condition{std::move(condition)}
+	ExecuteOrRetry(std::function<void()> &&task, std::function<bool()> &&condition, int count)
+	    : m_task{std::move(task)}
+	    , m_condition{std::move(condition)}
 	{
 		Q_ASSERT_X(m_condition && m_task, "The validity", "Task and condition must be assigned");
 		setAutoDelete(false);
@@ -17,11 +20,14 @@ public:
 		}
 	}
 
-	~ExecuteOrRetry() {}
+	~ExecuteOrRetry()
+	{
+	}
 
-	//If the condition is met, we execute normally. Otherwise, sleep 1 second and re-check the condition
-	//the loop will last m_count times
-	void run() override{
+	// If the condition is met, we execute normally. Otherwise, sleep 1 second and re-check the
+	// condition the loop will last m_count times
+	void run() override
+	{
 		if (m_condition()) {
 			m_task();
 			delete this;
@@ -33,13 +39,15 @@ public:
 			}
 		}
 	}
+
 private:
 	std::function<void()> m_task;
 	std::function<bool()> m_condition;
 	int m_count = 0;
 };
 
-void ExecutionHelper::execOnlyCondMetOrRetry(std::function<void()>&& task, std::function<bool()>&& condition, int count)
+void ExecutionHelper::execOnlyCondMetOrRetry(
+    std::function<void()> &&task, std::function<bool()> &&condition, int count)
 {
 	ExecuteOrRetry *taskOrRetry = new ExecuteOrRetry(std::move(task), std::move(condition), count);
 	QThreadPool::globalInstance()->start(taskOrRetry);
