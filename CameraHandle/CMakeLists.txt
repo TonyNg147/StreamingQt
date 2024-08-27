@@ -11,7 +11,9 @@ qt_add_qml_module(CameraHandle STATIC
 
 target_link_libraries(CameraHandle
     PUBLIC
-    Qt6::Multimedia Qt6::Quick Core
+    Qt6::Multimedia
+    Qt6::Quick
+    Core
     PRIVATE
     CorePrivate
 )

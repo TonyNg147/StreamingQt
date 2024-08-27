@@ -13,14 +13,12 @@ CameraStorageService::CameraStorageService(int duration, int fileCount, const QS
     , m_fileCount{fileCount}
 {
 	m_filePaths.reserve(fileCount);
-	qWarning() << "Get file count " << m_fileCount << " " << m_filePaths.size();
 	if (fileCount) {
 		QString currentPath = m_fileName;
 		for (size_t i = 0; i < m_fileCount; ++i) {
 			m_filePaths.push_back(currentPath + "_" + QString::number(i) + ".mp4");
 		}
 	}
-	qWarning() << "Call at this place " << m_duration;
 	m_trackingTimer.setInterval(m_duration);
 	m_trackingTimer.setSingleShot(true);
 	QObject::connect(
@@ -36,15 +34,10 @@ void CameraStorageService::setObservant(RecordingBase *observant)
 
 void CameraStorageService::startTracking()
 {
-	qWarning() << "Is valid service " << isValidService() << " " << m_isServiceRunning;
 	if (isValidService() && !m_isServiceRunning) {
-		qWarning() << __LINE__;
 		m_isServiceRunning = true;
-		qWarning() << __LINE__;
 		m_currentCount = 0;
-		qWarning() << __LINE__;
 		saveInNewFileIndex(m_currentCount);
-		qWarning() << __LINE__;
 		m_trackingTimer.start();
 		emit serviceTrackingStarted();
 
@@ -83,5 +76,7 @@ bool CameraStorageService::isValidService()
 
 void CameraStorageService::saveInNewFileIndex(const int &index)
 {
-	m_observant->setRecordingPath(m_filePaths[index]);
+	if (m_observant) {
+		m_observant->setRecordingPath(m_filePaths[index]);
+	}
 }

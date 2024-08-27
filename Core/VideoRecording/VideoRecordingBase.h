@@ -1,5 +1,6 @@
 #ifndef VIDEO_STORAGE_BASE_H
 #define VIDEO_STORAGE_BASE_H
+#include "capturesession.h"
 #include "RecordingBase.h"
 
 class QMediaCaptureSession;
@@ -14,15 +15,12 @@ public:
 
 public slots:
 
-	virtual void attachToScreenCapture(QMediaCaptureSession *) = 0;
+	virtual void attachToScreenCapture(CMediaCaptureSession *) = 0;
 
 	virtual void detachFromCurrent() = 0;
 
 signals:
 	void attachStatusOnCaptureSessionChanged(bool);
-
-protected:
-	QMediaCaptureSession *m_screenCaptureSession;
 };
 
 #endif

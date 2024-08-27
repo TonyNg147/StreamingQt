@@ -6,26 +6,29 @@
 #include <QScopedPointer>
 #include <QThread>
 
-
 #include "camerautils.h"
+#include <capturesession.h>
+#include <executionhelper.h>
 #include <FrameSourceBase.h>
 #include <QMediaCaptureSession>
-#include <executionhelper.h>
 class CameraPoolImpl;
 
-class CameraPool: public FrameSourceBase, public ExecutionHelper{
+class CameraPool
+    : public FrameSourceBase
+    , public ExecutionHelper
+{
 	Q_OBJECT
-	Q_PROPERTY(CameraUtil::CameraPosition position READ position WRITE setPosition NOTIFY positionChanged)
-	Q_PROPERTY(const QMediaCaptureSession* captureSession READ captureSession CONSTANT)
-
+	Q_PROPERTY(
+	    CameraUtil::CameraPosition position READ position WRITE setPosition NOTIFY positionChanged)
+	Q_PROPERTY(const CMediaCaptureSession *captureSession READ captureSession CONSTANT)
 
 public:
-	CameraPool(QObject* parent = nullptr);
+	CameraPool(QObject *parent = nullptr);
 	~CameraPool() override;
 
 	CameraUtil::CameraPosition position() const;
 	void setPosition(CameraUtil::CameraPosition newPosition);
-	const QMediaCaptureSession *captureSession() const;
+	const CMediaCaptureSession *captureSession() const;
 
 public slots:
 	void stop() final;
@@ -33,9 +36,10 @@ public slots:
 
 signals:
 	void positionChanged();
+
 private:
-	void onVideoFrameImageRecevied(const QImage&);
-	void onVideoFrameRecevied(const QVideoFrame&);
+	void onVideoFrameImageRecevied(const QImage &);
+	void onVideoFrameRecevied(const QVideoFrame &);
 
 private:
 	std::unique_ptr<CameraPoolImpl, DeleteLaterQObject> m_impl;

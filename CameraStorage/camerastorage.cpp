@@ -68,11 +68,11 @@ void CameraStorage::updateStorageCapacity()
 {
 }
 
-void CameraStorage::attachToScreenCapture(QMediaCaptureSession *session)
+void CameraStorage::attachToScreenCapture(CMediaCaptureSession *session)
 {
 	if (session) {
 		m_screenCaptureSession = session;
-		session->setRecorder(m_recorder.get());
+		session->get()->setRecorder(m_recorder.get());
 		emit attachStatusOnCaptureSessionChanged(true);
 	}
 }
@@ -81,7 +81,7 @@ void CameraStorage::detachFromCurrent()
 {
 	m_recorder->stop();
 	if (m_screenCaptureSession) {
-		m_screenCaptureSession->setRecorder(nullptr);
+		m_screenCaptureSession->get()->setRecorder(nullptr);
 	}
 	emit attachStatusOnCaptureSessionChanged(false);
 }
@@ -98,7 +98,6 @@ void CameraStorage::setRecordingPath(const QString &path)
 	m_recordingPath = path;
 
 	if (m_screenCaptureSession) {
-		qWarning() << "Set path here " << path;
 		m_recorder->setOutputLocation(QUrl::fromLocalFile(path));
 	} else {
 		qWarning() << "The recorder must be attached to Capture Session before using";

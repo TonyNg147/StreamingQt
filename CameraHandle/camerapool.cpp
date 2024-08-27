@@ -3,11 +3,24 @@
 #include <QCamera>
 #include <QScopedPointer>
 #include <QVideoSink>
+
 using namespace CameraUtil;
 
 namespace {
 constexpr int cNumberOfRetryStartingCamera = 3;
 }
+
+class CMediaCaptureSessionImpl : public CMediaCaptureSession
+{
+public:
+	QMediaCaptureSession *get() override
+	{
+		return &m_cameraCaptureSession;
+	}
+
+private:
+	QMediaCaptureSession m_cameraCaptureSession;
+};
 
 class CameraPoolImpl : public FrameSourceBaseImpl
 {
@@ -22,9 +35,9 @@ public slots:
 	void stop() override;
 	bool isReady() override;
 
-	QMediaCaptureSession *getCaptureSession()
+	CMediaCaptureSession *getCaptureSession()
 	{
-		return &m_cameraCaptureSession;
+		return &m_captureSession;
 	}
 
 private:
@@ -32,7 +45,7 @@ private:
 	void errorOccurred(QCamera::Error error, const QString &errorString);
 
 private:
-	QMediaCaptureSession m_cameraCaptureSession;
+	CMediaCaptureSessionImpl m_captureSession;
 	QScopedPointer<QCamera, QScopedPointerDeleteLater> m_camera;
 	QScopedPointer<QVideoSink, QScopedPointerDeleteLater> m_videoSink;
 	CameraUtil::CameraPosition m_position = CameraPosition::UNKNOWN;
@@ -111,10 +124,9 @@ void CameraPool::onVideoFrameRecevied(const QVideoFrame &videoFrame)
 
 CameraPoolImpl::CameraPoolImpl(QObject *parent)
     : FrameSourceBaseImpl{parent}
-    , m_cameraCaptureSession{this}
     , m_videoSink{new QVideoSink}
 {
-	m_cameraCaptureSession.setVideoSink(m_videoSink.get());
+	m_captureSession.get()->setVideoSink(m_videoSink.get());
 	QObject::connect(
 	    m_videoSink.get(), &QVideoSink::videoFrameChanged, this, &CameraPoolImpl::onFrameRecevied);
 }
@@ -132,7 +144,7 @@ void CameraPoolImpl::setCameraPosition(const CameraPosition &position)
 
 	QObject::connect(m_camera.get(), &QCamera::errorOccurred, this, &CameraPoolImpl::errorOccurred);
 
-	m_cameraCaptureSession.setCamera(m_camera.get());
+	m_captureSession.get()->setCamera(m_camera.get());
 }
 
 bool CameraPoolImpl::isReady()
@@ -149,7 +161,7 @@ void CameraPoolImpl::stop()
 {
 }
 
-const QMediaCaptureSession *CameraPool::captureSession() const
+const CMediaCaptureSession *CameraPool::captureSession() const
 {
 	return m_impl->getCaptureSession();
 }

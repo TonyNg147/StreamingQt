@@ -1,6 +1,5 @@
 #include "executionhelper.h"
-#include <HeapAllocationOnly.h>
-#include <QDebug>
+#include <Memory/HeapAllocationOnly.h>
 #include <QRunnable>
 #include <QThreadPool>
 

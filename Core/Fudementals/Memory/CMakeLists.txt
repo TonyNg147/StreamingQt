@@ -1,17 +1,21 @@
-set(SOURCE)
 
 if(WIN32)
-    set(SOURCE HeapAllocationOnly_win.cpp)
+    set(SOURCES HeapAllocationOnly_win.cpp)
 elseif(UNIX)
-    set(SOURCE HeapAllocationOnly_unix.cpp)
+    set(SOURCES HeapAllocationOnly_unix.cpp)
 endif()
 
-if(NOT DEFINED SOURCE)
+if(NOT DEFINED SOURCES)
     message(FATAL_ERROR "Enironment not be supportted")
 endif()
 
-add_library(HeapAllocation STATIC ${SOURCE})
 
-target_link_libraries(HeapAllocation PUBLIC Qt6::Core)
+list(APPEND SOURCES
+observerPtr.cpp
+TrackableImpl.cpp
+)
 
-target_include_directories(HeapAllocation INTERFACE ./)
+add_library(MemoryUtil STATIC ${SOURCES})
+
+target_link_libraries(MemoryUtil PUBLIC SystemIF Qt6::Core)
+

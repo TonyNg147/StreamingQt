@@ -2,7 +2,6 @@
 
 VideoRecordingBase::VideoRecordingBase(QObject *parent)
     : RecordingBase{parent}
-    , m_screenCaptureSession{nullptr}
 {
 }
 

@@ -18,7 +18,6 @@ int main(int argc, char *argv[])
 
 	const QUrl url(QStringLiteral("qrc:/HMI/MainCamera.qml"));
 
-	// QThread::sleep(10);
 	QObject::connect(
 	    &engine,
 	    &QQmlApplicationEngine::objectCreationFailed,

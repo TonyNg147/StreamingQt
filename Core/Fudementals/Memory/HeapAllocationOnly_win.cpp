@@ -1,6 +1,6 @@
 #include "HeapAllocationOnly.h"
-#include <Processthreadsapi.h>
-#include <QDebug>
+// #include <Processthreadsapi.h>
+
 #include <windows.h>
 
 namespace {

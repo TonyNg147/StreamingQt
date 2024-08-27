@@ -6,6 +6,8 @@ set(
     VideoRecording/RecordingBase.cpp
     VideoRecording/VideoRecordingBase.cpp
     VideoRecording/VideoRecordingBase.h
+    VideoRecording/capturesession.cpp
+    VideoRecording/capturesession.h
 
 )
 
@@ -16,7 +18,8 @@ set(
 
 add_subdirectory(Fudementals)
 
-add_library(Core STATIC ${SOURCES})
+add_library(Core STATIC ${SOURCES}
+    VideoRecording/capturesession.h VideoRecording/capturesession.cpp)
 
 
 add_library(CorePrivate STATIC ${SOURCE_PRIVATE})

@@ -1,12 +1,11 @@
 #ifndef CAMERA_STORAGE_H
 #define CAMERA_STORAGE_H
+#include "camerastorageservice.h"
 #include <DeleteLater.h>
 #include <QMediaRecorder>
 #include <VideoRecordingBase.h>
 #include <VideoStorageBase.h>
 class QMediaRecorder;
-// class CameraStorageServiceBase;
-#include "camerastorageservice.h"
 
 class CameraStorage
     : public VideoRecordingBase
@@ -23,7 +22,7 @@ public:
 
 public slots:
 
-	virtual void attachToScreenCapture(QMediaCaptureSession *) override;
+	virtual void attachToScreenCapture(CMediaCaptureSession *) override;
 
 	virtual void detachFromCurrent() override;
 
@@ -42,6 +41,7 @@ private:
 private:
 	std::unique_ptr<QMediaRecorder> m_recorder;
 	std::unique_ptr<CameraStorageServiceBase> m_cameraService;
+	observe_ptr<CMediaCaptureSession> m_screenCaptureSession = nullptr;
 };
 
 #endif // CAMERA_STORAGE_H

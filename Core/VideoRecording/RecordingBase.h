@@ -1,9 +1,13 @@
 #ifndef STORAGE_BASE_H
 #define STORAGE_BASE_H
+#include <Memory/TrackableImpl.h>
 #include <QObject>
 #include <QString>
+#include <SystemIF/IFManipulate.h>
 
-class RecordingBase : public QObject
+class RecordingBase
+    : public QObject
+    , public TrackableImpl
 {
 	Q_OBJECT
 
@@ -21,4 +25,6 @@ protected:
 protected:
 	QString m_recordingPath;
 };
+
+REGISTER_IF(RecordingBase)
 #endif
