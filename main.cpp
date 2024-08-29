@@ -3,11 +3,12 @@
 #include <camerautils.h>
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <singleapplication.h>
 #include <videoTypeRegistration.h>
 
 int main(int argc, char *argv[])
 {
-	QGuiApplication app(argc, argv);
+	SingleApplication app(argc, argv, "CameraStreamingApp");
 
 	QQmlApplicationEngine engine;
 	CustomVideo::registerType();
