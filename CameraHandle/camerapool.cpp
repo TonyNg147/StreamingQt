@@ -99,8 +99,6 @@ void CameraPool::stop()
 
 void CameraPool::start()
 {
-	// Q_ASSERT_X(m_impl->isReady(), "Camera Ready", "Camera must be ready before it can be used");
-
 	auto startWhenCameraReadyFn = [this]() {
 		m_impl->start();
 	};

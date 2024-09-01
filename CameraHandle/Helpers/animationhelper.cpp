@@ -3,6 +3,13 @@
 #include <QPainterPath>
 
 namespace {
+constexpr int cXRadius = 10;
+constexpr int cYRadius = 10;
+constexpr int cSplashEffectMargins = 10;
+constexpr int cSplashEffectEndOpacity = 0;
+constexpr int cSplashEffectDuration = 1000;
+constexpr const char *cSplashEffectPropertyName = "opacity";
+
 void addSplashEffect(AnimatedPaintedItem *item)
 {
 	// There is no need to care about the lifycycle of the heap allocation object
@@ -17,14 +24,14 @@ void addSplashEffect(AnimatedPaintedItem *item)
 		const size_t height = splashEffect->height();
 		QRectF rect(x, y, width, height);
 		QPainterPath path;
-		path.addRoundedRect(rect, 10, 10);
+		path.addRoundedRect(rect, cXRadius, cYRadius);
 		painter->fillPath(path, Qt::white);
 	});
 	splashEffect->setFill(item);
-	splashEffect->setMargins(10);
-	splashEffect->setDuration(1000);
-	splashEffect->setPropertyName("opacity");
-	splashEffect->setEndValue(0);
+	splashEffect->setMargins(cSplashEffectMargins);
+	splashEffect->setDuration(cSplashEffectDuration);
+	splashEffect->setPropertyName(cSplashEffectPropertyName);
+	splashEffect->setEndValue(cSplashEffectEndOpacity);
 }
 }; // namespace
 

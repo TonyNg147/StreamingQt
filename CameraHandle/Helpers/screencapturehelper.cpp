@@ -3,6 +3,11 @@
 #include <camerascreencapture.h>
 #include <QDebug>
 
+namespace {
+constexpr float cScreenCaptureAnimationEndScale = 0.3;
+constexpr const char *cScreenCaptureAnimationPropertyName = "scale";
+}; // namespace
+
 ScreenCaptureHelper &ScreenCaptureHelper::getInstance()
 {
 	static ScreenCaptureHelper instance;
@@ -15,10 +20,10 @@ std::unique_ptr<ScreenCapture> ScreenCaptureHelper::makeCameraScreenCapture(
 	if (quickItem) {
 		std::unique_ptr<ScreenCapture> screenCapture = std::make_unique<CameraScreenCapture>(
 		    image, quickItem);
-		screenCapture->setPropertyName("scale");
+		screenCapture->setPropertyName(cScreenCaptureAnimationPropertyName);
 		screenCapture->setTransformOrigin(QQuickItem::BottomRight);
 		screenCapture->setFill(quickItem);
-		screenCapture->setEndValue(QVariant(0.3));
+		screenCapture->setEndValue(QVariant(cScreenCaptureAnimationEndScale));
 
 		AnimationHelper::getInstance().attachAnimation(screenCapture.get(), AnimationType::Splash);
 		return std::move(screenCapture);
