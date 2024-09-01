@@ -42,6 +42,23 @@ repos:
               main.cpp
           )$
 
+      - id: cmake-format
+        name: cmake-format
+        description: cmake-format can format your listfiles nicely so that they don't look like crap.
+        entry: cmake-format -i
+        language: python
+        types_or: [cmake]
+        additional_dependencies: ["cmakelang"]
+        files: |
+          (?x)(
+              CMakeList.txt |
+              ^cmake/.* |
+              ^CameraHandle/.* |
+              ^CameraStorage/.* |
+              ^Core/.* |
+              ^CustomVideoHandle/.*
+          )$
+
       - id: qmlFormat
         name: Format qml files
         entry: qmlformat -i -t

@@ -9,7 +9,6 @@ qt_add_qml_module(HMI STATIC
     QML_FILES Main.qml MainCamera.qml
 )
 
-
 target_link_libraries(HMI
     PUBLIC
     HMIAssets
