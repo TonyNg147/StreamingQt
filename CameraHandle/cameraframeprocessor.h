@@ -1,41 +1,34 @@
 #ifndef CAMERAFRAMEPROCESSOR_H
 #define CAMERAFRAMEPROCESSOR_H
 
-#include <QObject>
-#include <QQuickItem>
-#include <QImage>
-#include <QQuickPaintedItem>
+#include <RoundedImage.h>
 
 #include "camerapool.h"
+#include "screencapture.h"
 
-#include "camerascreencapture.h"
-
-class CameraFrameProcessor : public QQuickPaintedItem
+class CameraFrameProcessor : public RoundedImage
 {
 	Q_OBJECT
-	Q_PROPERTY(CameraPool* sourcePool READ sourcePool WRITE setSourcePool NOTIFY sourcePoolChanged)
+	Q_PROPERTY(CameraPool *sourcePool READ sourcePool WRITE setSourcePool NOTIFY sourcePoolChanged)
+
 public:
 	explicit CameraFrameProcessor(QObject *parent = nullptr);
 
 	CameraPool *sourcePool() const;
 	void setSourcePool(CameraPool *newSourcePool);
 
-	void paint(QPainter *painter) final;
-
 public slots:
 	void capture();
 
 private:
-	void onVideoFrameChanged(const QImage&);
-	void rounded(QPainter* painter);
+	void onVideoFrameChanged(const QImage &);
 
 signals:
 	void sourcePoolChanged();
 
 private:
 	CameraPool *m_sourcePool = nullptr;
-	QImage m_currentVideoFrame;
-	std::unique_ptr<CameraScreenCapture> m_screenCapture;
+	std::unique_ptr<ScreenCapture> m_screenCapture;
 };
 
 #endif // CAMERAFRAMEPROCESSOR_H

@@ -11,7 +11,6 @@ endif()
 
 
 list(APPEND SOURCES
-observerPtr.cpp
 TrackableImpl.cpp
 )
 

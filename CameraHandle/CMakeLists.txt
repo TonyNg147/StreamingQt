@@ -6,16 +6,21 @@ qt_add_qml_module(CameraHandle STATIC
     cameraframeprocessor.cpp
     camerapool.cpp
     cameraTypeRegistration.h
-    SOURCES camerascreencapture.h camerascreencapture.cpp
 )
+
+add_subdirectory(CameraCaptureService)
+add_subdirectory(Helpers)
 
 target_link_libraries(CameraHandle
     PUBLIC
     Qt6::Multimedia
     Qt6::Quick
     Core
+    CameraCaptureService
+    CameraHelpers
     PRIVATE
     CorePrivate
+    PRIVATE
 )
 
 target_include_directories(CameraHandle INTERFACE ./)
